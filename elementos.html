@@ -1,0 +1,603 @@
+<html lang="pt-BR"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela Periodica</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+      body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+          transition: background-color 0.3s, color 0.3s;
+          background-color: #ffffff;
+          color: #000000;
+      }
+      header {
+          background-color: #6cb2e0;
+          color: rgba(255, 255, 255, 0.562);
+          padding: 10px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+      }
+      .logo {
+          font-size: 24px;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+      }
+      .logo a {
+          color: inherit;
+          text-decoration: none;
+      }
+      .logo i {
+          font-size: 30px;
+          margin-right: 10px;
+      }
+      nav a {
+          color: white;
+          text-decoration: none;
+          margin: 0 10px;
+          font-size: 18px;
+      }
+      nav a:hover {
+          text-decoration: underline;
+      }
+      .search-and-filter {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 20px;
+      }
+      .search-box {
+          width: 300px;
+          padding: 8px;
+          border-radius: 4px;
+          border: 1px solid #333;
+          font-size: 16px;
+      }
+      .filter-buttons {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px;
+      }
+      .filter-buttons button {
+          padding: 6px 10px;
+          border: 1px solid;
+          border-radius: 4px;
+          color: white;
+          font-size: 14px;
+          cursor: pointer;
+          outline: none;
+          transition: background-color 0.3s, border-color 0.3s;
+      }
+      /* Cores dos botões */
+      .filter-buttons button[data-letter="A"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="B"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="C"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="D"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="E"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="F"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="G"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="H"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="I"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="J"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="K"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="L"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="M"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="N"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="O"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="P"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="Q"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="R"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="S"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="T"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="U"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="V"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="W"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="X"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="Y"] { background-color: #05183c; }
+      .filter-buttons button[data-letter="Z"] { background-color: #05183c; }
+      
+      .filter-buttons button:hover {
+          opacity: 0.8;
+      }
+      .light-mode .filter-buttons button {
+          border-color: #333;
+      }
+      .dark-mode .filter-buttons button {
+          border-color: #666;
+      }
+      .elementos-lista {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 20px;
+      }
+      .elementos {
+          text-align: center;
+          width: 150px;
+      }
+      .elementos img {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #333;
+      }
+      .elementos p {
+          margin: 10px 0 0;
+          font-size: 16px;
+      }
+
+      .mode-icon {
+          cursor: pointer;
+          font-size: 24px;
+          background: none;
+          border: none;
+          color: white;
+      }
+      .light-mode {
+          background-color: white;
+          color: black;
+      }
+      .light-mode header {
+          background-color: #333;
+          color: white;
+      }
+      .dark-mode {
+          background-color: #333;
+          color: white;
+      }
+      .dark-mode header {
+          background-color: black;
+          color: rgba(255, 255, 255, 0.562);
+      }
+      .table-container {
+            display: grid;
+            grid-template-columns: repeat(18, 50px);
+            grid-template-rows: repeat(7, 50px);
+            gap: 10px;
+            justify-content: center;
+            padding: 20px;
+            grid-auto-flow: dense;
+        }
+
+        .element {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            background-color: #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s, width 0.3s, height 0.3s;
+        }
+
+        .element span {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .element-info {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        .element:hover .element-info {
+            display: block;
+        }
+
+        .element:hover {
+            width: 80px;
+            height: 80px;
+            z-index: 2;
+        }
+
+        .element-info .atomic-number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+
+        .element-info .atomic-weight {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+        }
+
+        .element-info .element-name {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+        }
+
+        /* Classes Químicas */
+        .metal-alkaline { background-color: #ff6666; }
+        .metal-alkaline-earth { background-color: #ffcc99; }
+        .metalloids { background-color: #99ff99; }
+        .nonmetals { background-color: #99ccff; }
+        .halogens { background-color: #ff99cc; }
+        .noble-gases { background-color: #ffccff; }
+        .lanthanides { background-color: #ccccff; }
+        .actinides { background-color: #ffcc99; }
+        .transition-metals { background-color: #f5b1b1; }
+
+        /* Legenda */
+        .legend {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .legend h3 {
+            margin-bottom: 10px;
+        }
+
+        .legend ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .legend li {
+            display: flex;
+            align-items: center;
+            margin: 5px 10px;
+        }
+
+        .legend .color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        .metal-alkaline-legend { background-color: #ff6666; }
+        .metal-alkaline-earth-legend { background-color: #ffcc99; }
+        .metalloids-legend { background-color: #99ff99; }
+        .nonmetals-legend { background-color: #99ccff; }
+        .halogens-legend { background-color: #ff99cc; }
+        .noble-gases-legend { background-color: #ffccff; }
+        .lanthanides-legend { background-color: #ccccff; }
+        .actinides-legend { background-color: #ffcc99; }
+        .transition-metals-legend { background-color: #f5b1b1; }
+         /* Responsividade */
+         @media screen and (max-width: 768px) {
+            .table-container {
+                grid-template-columns: repeat(9, 50px);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .table-container {
+                grid-template-columns: repeat(6, 50px);
+            }
+        }
+  </style>
+</head>
+<body class="light-mode">
+
+<header>
+  <div class="logo">
+      <a href="index.html"><i class="fas fa-flask"></i> Voltar para Elementos Químicos</a>
+  </div>
+  <nav>
+      <a href="index.html">Início</a>
+      <a href="fale conosco.html">Fale Conosco</a>
+  </nav>
+  <button class="mode-icon" onclick="toggleMode()">🌙</button>
+</header>
+
+<div class="scientists">
+  <h2>Tabela Periodica</h2>
+  <div class="search-and-filter">
+      <input type="text" id="search-box" class="search-box" placeholder="Buscar cientistas...">
+      <div class="filter-buttons">
+          <button type="button" class="btn" data-letter="A" onclick="filterByLetter('A')">A</button>
+          <button type="button" class="btn" data-letter="B" onclick="filterByLetter('B')">B</button>
+          <button type="button" class="btn" data-letter="C" onclick="filterByLetter('C')">C</button>
+          <button type="button" class="btn" data-letter="D" onclick="filterByLetter('D')">D</button>
+          <button type="button" class="btn" data-letter="E" onclick="filterByLetter('E')">E</button>
+          <button type="button" class="btn" data-letter="F" onclick="filterByLetter('F')">F</button>
+          <button type="button" class="btn" data-letter="G" onclick="filterByLetter('G')">G</button>
+          <button type="button" class="btn" data-letter="H" onclick="filterByLetter('H')">H</button>
+          <button type="button" class="btn" data-letter="I" onclick="filterByLetter('I')">I</button>
+          <button type="button" class="btn" data-letter="J" onclick="filterByLetter('J')">J</button>
+          <button type="button" class="btn" data-letter="K" onclick="filterByLetter('K')">K</button>
+          <button type="button" class="btn" data-letter="L" onclick="filterByLetter('L')">L</button>
+          <button type="button" class="btn" data-letter="M" onclick="filterByLetter('M')">M</button>
+          <button type="button" class="btn" data-letter="N" onclick="filterByLetter('N')">N</button>
+          <button type="button" class="btn" data-letter="O" onclick="filterByLetter('O')">O</button>
+          <button type="button" class="btn" data-letter="P" onclick="filterByLetter('P')">P</button>
+          <button type="button" class="btn" data-letter="Q" onclick="filterByLetter('Q')">Q</button>
+          <button type="button" class="btn" data-letter="R" onclick="filterByLetter('R')">R</button>
+          <button type="button" class="btn" data-letter="S" onclick="filterByLetter('S')">S</button>
+          <button type="button" class="btn" data-letter="T" onclick="filterByLetter('T')">T</button>
+          <button type="button" class="btn" data-letter="U" onclick="filterByLetter('U')">U</button>
+          <button type="button" class="btn" data-letter="V" onclick="filterByLetter('V')">V</button>
+          <button type="button" class="btn" data-letter="W" onclick="filterByLetter('W')">W</button>
+          <button type="button" class="btn" data-letter="X" onclick="filterByLetter('X')">X</button>
+          <button type="button" class="btn" data-letter="Y" onclick="filterByLetter('Y')">Y</button>
+          <button type="button" class="btn" data-letter="Z" onclick="filterByLetter('Z')">Z</button>
+      </div>
+  </div>
+  <div class="table-container">
+    <!-- Linha 1 -->
+    <div class="element nonmetals"><span class="large">H</span><div class="element-info"><div class="atomic-number">1</div><div class="element-name">Hidrogênio</div><div class="atomic-weight">1.008</div></div></div>
+    <div class="element noble-gases"><span class="large">He</span><div class="element-info"><div class="atomic-number">2</div><div class="element-name">Hélio</div><div class="atomic-weight">4.0026</div></div></div>
+
+    <!-- Linha 2 -->
+    <div class="element metal-alkaline"><span class="large">Li</span><div class="element-info"><div class="atomic-number">3</div><div class="element-name">Lítio</div><div class="atomic-weight">6.94</div></div></div>
+    <div class="element metal-alkaline-earth"><span class="large">Be</span><div class="element-info"><div class="atomic-number">4</div><div class="element-name">Berílio</div><div class="atomic-weight">9.0122</div></div></div>
+    <div class="element metalloids"><span class="large">B</span><div class="element-info"><div class="atomic-number">5</div><div class="element-name">Boro</div><div class="atomic-weight">10.81</div></div></div>
+    <div class="element nonmetals"><span class="large">C</span><div class="element-info"><div class="atomic-number">6</div><div class="element-name">Carbono</div><div class="atomic-weight">12.01</div></div></div>
+    <div class="element nonmetals"><span class="large">N</span><div class="element-info"><div class="atomic-number">7</div><div class="element-name">Nitrogênio</div><div class="atomic-weight">14.007</div></div></div>
+    <div class="element nonmetals"><span class="large">O</span><div class="element-info"><div class="atomic-number">8</div><div class="element-name">Oxigênio</div><div class="atomic-weight">15.999</div></div></div>
+    <div class="element halogens"><span class="large">F</span><div class="element-info"><div class="atomic-number">9</div><div class="element-name">Flúor</div><div class="atomic-weight">18.998</div></div></div>
+    <div class="element noble-gases"><span class="large">Ne</span><div class="element-info"><div class="atomic-number">10</div><div class="element-name">Neônio</div><div class="atomic-weight">20.18</div></div></div>
+
+    <!-- Linha 3 -->
+    <div class="element metal-alkaline"><span class="large">Na</span><div class="element-info"><div class="atomic-number">11</div><div class="element-name">Sódio</div><div class="atomic-weight">22.99</div></div></div>
+    <div class="element metal-alkaline-earth"><span class="large">Mg</span><div class="element-info"><div class="atomic-number">12</div><div class="element-name">Magnésio</div><div class="atomic-weight">24.305</div></div></div>
+    <div class="element metalloids"><span class="large">Al</span><div class="element-info"><div class="atomic-number">13</div><div class="element-name">Alumínio</div><div class="atomic-weight">26.9815</div></div></div>
+    <div class="element metalloids"><span class="large">Si</span><div class="element-info"><div class="atomic-number">14</div><div class="element-name">Silício</div><div class="atomic-weight">28.085</div></div></div>
+    <div class="element nonmetals"><span class="large">P</span><div class="element-info"><div class="atomic-number">15</div><div class="element-name">Fósforo</div><div class="atomic-weight">30.97376</div></div></div>
+    <div class="element nonmetals"><span class="large">S</span><div class="element-info"><div class="atomic-number">16</div><div class="element-name">Enxofre</div><div class="atomic-weight">32.06</div></div></div>
+    <div class="element halogens"><span class="large">Cl</span><div class="element-info"><div class="atomic-number">17</div><div class="element-name">Cloro</div><div class="atomic-weight">35.45</div></div></div>
+    <div class="element noble-gases"><span class="large">Ar</span><div class="element-info"><div class="atomic-number">18</div><div class="element-name">Argônio</div><div class="atomic-weight">39.95</div></div></div>
+
+    <!-- Linha 4 -->
+    <div class="element metal-alkaline"><span class="large">K</span><div class="element-info"><div class="atomic-number">19</div><div class="element-name">Potássio</div><div class="atomic-weight">39.098</div></div></div>
+    <div class="element metal-alkaline-earth"><span class="large">Ca</span><div class="element-info"><div class="atomic-number">20</div><div class="element-name">Cálcio</div><div class="atomic-weight">40.078</div></div></div>
+    <div class="element transition-metals"><span class="large">Sc</span><div class="element-info"><div class="atomic-number">21</div><div class="element-name">Escândio</div><div class="atomic-weight">44.95591</div></div></div>
+    <div class="element transition-metals"><span class="large">Ti</span><div class="element-info"><div class="atomic-number">22</div><div class="element-name">Titânio</div><div class="atomic-weight">47.867</div></div></div>
+    <div class="element transition-metals"><span class="large">V</span><div class="element-info"><div class="atomic-number">23</div><div class="element-name">Vanádio</div><div class="atomic-weight">50.9415</div></div></div>
+    <div class="element transition-metals"><span class="large">Cr</span><div class="element-info"><div class="atomic-number">24</div><div class="element-name">Cromo</div><div class="atomic-weight">51.9961</div></div></div>
+    <div class="element transition-metals"><span class="large">Mn</span><div class="element-info"><div class="atomic-number">25</div><div class="element-name">Manganês</div><div class="atomic-weight">54.93804</div></div></div>
+    <div class="element transition-metals"><span class="large">Fe</span><div class="element-info"><div class="atomic-number">26</div><div class="element-name">Ferro</div><div class="atomic-weight">55.845</div></div></div>
+    <div class="element transition-metals"><span class="large">Co</span><div class="element-info"><div class="atomic-number">27</div><div class="element-name">Cobalto</div><div class="atomic-weight">58.933</div></div></div>
+    <div class="element transition-metals"><span class="large">Ni</span><div class="element-info"><div class="atomic-number">28</div><div class="element-name">Níquel</div><div class="atomic-weight">58.693</div></div></div>
+    <div class="element transition-metals"><span class="large">Cu</span><div class="element-info"><div class="atomic-number">29</div><div class="element-name">Cobre</div><div class="atomic-weight">63.546</div></div></div>
+    <div class="element transition-metals"><span class="large">Zn</span><div class="element-info"><div class="atomic-number">30</div><div class="element-name">Zinco</div><div class="atomic-weight">65.38</div></div></div>
+    <div class="element metalloids"><span class="large">Ga</span><div class="element-info"><div class="atomic-number">31</div><div class="element-name">Gálio</div><div class="atomic-weight">69.723</div></div></div>
+    <div class="element metalloids"><span class="large">Ge</span><div class="element-info"><div class="atomic-number">32</div><div class="element-name">Germânio</div><div class="atomic-weight">72.63</div></div></div>
+    <div class="element metalloids"><span class="large">As</span><div class="element-info"><div class="atomic-number">33</div><div class="element-name">Arsênio</div><div class="atomic-weight">74.9216</div></div></div>
+    <div class="element nonmetals"><span class="large">Se</span><div class="element-info"><div class="atomic-number">34</div><div class="element-name">Selênio</div><div class="atomic-weight">78.971</div></div></div>
+    <div class="element halogens"><span class="large">Br</span><div class="element-info"><div class="atomic-number">35</div><div class="element-name">Bromo</div><div class="atomic-weight">79.904</div></div></div>
+    <div class="element noble-gases"><span class="large">Kr</span><div class="element-info"><div class="atomic-number">36</div><div class="element-name">Kriptônio</div><div class="atomic-weight">83.798</div></div></div>
+
+    <!-- Linha 5 -->
+    <div class="element metal-alkaline"><span class="large">Rb</span><div class="element-info"><div class="atomic-number">37</div><div class="element-name">Rubídio</div><div class="atomic-weight">85.4678</div></div></div>
+    <div class="element metal-alkaline-earth"><span class="large">Sr</span><div class="element-info"><div class="atomic-number">38</div><div class="element-name">Estrôncio</div><div class="atomic-weight">87.62</div></div></div>
+    <div class="element transition-metals"><span class="large">Y</span><div class="element-info"><div class="atomic-number">39</div><div class="element-name">Ítrio</div><div class="atomic-weight">88.90584</div></div></div>
+    <div class="element transition-metals"><span class="large">Zr</span><div class="element-info"><div class="atomic-number">40</div><div class="element-name">Zircônio</div><div class="atomic-weight">91.224</div></div></div>
+    <div class="element transition-metals"><span class="large">Nb</span><div class="element-info"><div class="atomic-number">41</div><div class="element-name">Nióbio</div><div class="atomic-weight">92.90637</div></div></div>
+    <div class="element transition-metals"><span class="large">Mo</span><div class="element-info"><div class="atomic-number">42</div><div class="element-name">Molibdênio</div><div class="atomic-weight">95.95</div></div></div>
+    <div class="element transition-metals"><span class="large">Tc</span><div class="element-info"><div class="atomic-number">43</div><div class="element-name">Tecnécio</div><div class="atomic-weight">98</div></div></div>
+    <div class="element transition-metals"><span class="large">Ru</span><div class="element-info"><div class="atomic-number">44</div><div class="element-name">Rutênio</div><div class="atomic-weight">101.07</div></div></div>
+    <div class="element transition-metals"><span class="large">Rh</span><div class="element-info"><div class="atomic-number">45</div><div class="element-name">Ródio</div><div class="atomic-weight">102.9055</div></div></div>
+    <div class="element transition-metals"><span class="large">Pd</span><div class="element-info"><div class="atomic-number">46</div><div class="element-name">Paládio</div><div class="atomic-weight">106.42</div></div></div>
+    <div class="element transition-metals"><span class="large">Ag</span><div class="element-info"><div class="atomic-number">47</div><div class="element-name">Prata</div><div class="atomic-weight">107.8682</div></div></div>
+    <div class="element transition-metals"><span class="large">Cd</span><div class="element-info"><div class="atomic-number">48</div><div class="element-name">Cádmio</div><div class="atomic-weight">112.414</div></div></div>
+    <div class="element metalloids"><span class="large">In</span><div class="element-info"><div class="atomic-number">49</div><div class="element-name">Índio</div><div class="atomic-weight">114.818</div></div></div>
+    <div class="element metalloids"><span class="large">Sn</span><div class="element-info"><div class="atomic-number">50</div><div class="element-name">Estanho</div><div class="atomic-weight">118.71</div></div></div>
+    <div class="element metalloids"><span class="large">Sb</span><div class="element-info"><div class="atomic-number">51</div><div class="element-name">Antimônio</div><div class="atomic-weight">121.76</div></div></div>
+    <div class="element metalloids"><span class="large">Te</span><div class="element-info"><div class="atomic-number">52</div><div class="element-name">Telúrio</div><div class="atomic-weight">127.6</div></div></div>
+    <div class="element halogens"><span class="large">I</span><div class="element-info"><div class="atomic-number">53</div><div class="element-name">Iodo</div><div class="atomic-weight">126.90447</div></div></div>
+    <div class="element noble-gases"><span class="large">Xe</span><div class="element-info"><div class="atomic-number">54</div><div class="element-name">Xenônio</div><div class="atomic-weight">131.293</div></div></div>
+
+    <!-- Linha 6 -->
+    <div class="element metal-alkaline"><span class="large">Cs</span><div class="element-info"><div class="atomic-number">55</div><div class="element-name">Césio</div><div class="atomic-weight">132.90545196</div></div></div>
+    <div class="element metal-alkaline-earth"><span class="large">Ba</span><div class="element-info"><div class="atomic-number">56</div><div class="element-name">Bário</div><div class="atomic-weight">137.327</div></div></div>
+    <div class="element lanthanides"><span class="large">La</span><div class="element-info"><div class="atomic-number">57</div><div class="element-name">Lantânio</div><div class="atomic-weight">138.90547</div></div></div>
+    <div class="element lanthanides"><span class="large">Ce</span><div class="element-info"><div class="atomic-number">58</div><div class="element-name">Cério</div><div class="atomic-weight">140.116</div></div></div>
+    <div class="element lanthanides"><span class="large">Pr</span><div class="element-info"><div class="atomic-number">59</div><div class="element-name">Praseodímio</div><div class="atomic-weight">140.90766</div></div></div>
+    <div class="element lanthanides"><span class="large">Nd</span><div class="element-info"><div class="atomic-number">60</div><div class="element-name">Neodímio</div><div class="atomic-weight">144.242</div></div></div>
+    <div class="element lanthanides"><span class="large">Pm</span><div class="element-info"><div class="atomic-number">61</div><div class="element-name">Promécio</div><div class="atomic-weight">145</div></div></div>
+    <div class="element lanthanides"><span class="large">Sm</span><div class="element-info"><div class="atomic-number">62</div><div class="element-name">Samário</div><div class="atomic-weight">150.36</div></div></div>
+    <div class="element lanthanides"><span class="large">Eu</span><div class="element-info"><div class="atomic-number">63</div><div class="element-name">Európio</div><div class="atomic-weight">151.964</div></div></div>
+    <div class="element lanthanides"><span class="large">Gd</span><div class="element-info"><div class="atomic-number">64</div><div class="element-name">Gadolínio</div><div class="atomic-weight">157.25</div></div></div>
+    <div class="element lanthanides"><span class="large">Tb</span><div class="element-info"><div class="atomic-number">65</div><div class="element-name">Térbio</div><div class="atomic-weight">158.92535</div></div></div>
+    <div class="element lanthanides"><span class="large">Dy</span><div class="element-info"><div class="atomic-number">66</div><div class="element-name">Disprósio</div><div class="atomic-weight">162.5</div></div></div>
+    <div class="element lanthanides"><span class="large">Ho</span><div class="element-info"><div class="atomic-number">67</div><div class="element-name">Hólmio</div><div class="atomic-weight">164.93033</div></div></div>
+    <div class="element lanthanides"><span class="large">Er</span><div class="element-info"><div class="atomic-number">68</div><div class="element-name">Érbio</div><div class="atomic-weight">167.259</div></div></div>
+    <div class="element lanthanides"><span class="large">Tm</span><div class="element-info"><div class="atomic-number">69</div><div class="element-name">Túlio</div><div class="atomic-weight">168.93422</div></div></div>
+    <div class="element lanthanides"><span class="large">Yb</span><div class="element-info"><div class="atomic-number">70</div><div class="element-name">Itérbio</div><div class="atomic-weight">173.045</div></div></div>
+    <div class="element lanthanides"><span class="large">Lu</span><div class="element-info"><div class="atomic-number">71</div><div class="element-name">Lutécio</div><div class="atomic-weight">174.9668</div></div></div>
+    <div class="element transition-metals"><span class="large">Hf</span><div class="element-info"><div class="atomic-number">72</div><div class="element-name">Háfnio</div><div class="atomic-weight">178.49</div></div></div>
+    <div class="element transition-metals"><span class="large">Ta</span><div class="element-info"><div class="atomic-number">73</div><div class="element-name">Tântalo</div><div class="atomic-weight">180.94788</div></div></div>
+    <div class="element transition-metals"><span class="large">W</span><div class="element-info"><div class="atomic-number">74</div><div class="element-name">Tungstênio</div><div class="atomic-weight">183.84</div></div></div>
+    <div class="element transition-metals"><span class="large">Re</span><div class="element-info"><div class="atomic-number">75</div><div class="element-name">Rênio</div><div class="atomic-weight">186.207</div></div></div>
+    <div class="element transition-metals"><span class="large">Os</span><div class="element-info"><div class="atomic-number">76</div><div class="element-name">Ósmio</div><div class="atomic-weight">190.23</div></div></div>
+    <div class="element transition-metals"><span class="large">Ir</span><div class="element-info"><div class="atomic-number">77</div><div class="element-name">Irídio</div><div class="atomic-weight">192.217</div></div></div>
+    <div class="element transition-metals"><span class="large">Pt</span><div class="element-info"><div class="atomic-number">78</div><div class="element-name">Platina</div><div class="atomic-weight">195.084</div></div></div>
+    <div class="element transition-metals"><span class="large">Au</span><div class="element-info"><div class="atomic-number">79</div><div class="element-name">Ouro</div><div class="atomic-weight">196.966569</div></div></div>
+    <div class="element transition-metals"><span class="large">Hg</span><div class="element-info"><div class="atomic-number">80</div><div class="element-name">Mercúrio</div><div class="atomic-weight">200.59</div></div></div>
+    <div class="element metalloids"><span class="large">Tl</span><div class="element-info"><div class="atomic-number">81</div><div class="element-name">Tálio</div><div class="atomic-weight">204.38</div></div></div>
+    <div class="element metalloids"><span class="large">Pb</span><div class="element-info"><div class="atomic-number">82</div><div class="element-name">Chumbo</div><div class="atomic-weight">207.2</div></div></div>
+    <div class="element metalloids"><span class="large">Bi</span><div class="element-info"><div class="atomic-number">83</div><div class="element-name">Bismuto</div><div class="atomic-weight">208.98040</div></div></div>
+    <div class="element metalloids"><span class="large">Po</span><div class="element-info"><div class="atomic-number">84</div><div class="element-name">Polônio</div><div class="atomic-weight">209</div></div></div>
+    <div class="element halogens"><span class="large">At</span><div class="element-info"><div class="atomic-number">85</div><div class="element-name">Astato</div><div class="atomic-weight">210</div></div></div>
+    <div class="element noble-gases"><span class="large">Rn</span><div class="element-info"><div class="atomic-number">86</div><div class="element-name">Radônio</div><div class="atomic-weight">222</div></div></div>
+
+    <!-- Linha 7 -->
+    <div class="element metal-alkaline"><span class="large">Fr</span><div class="element-info"><div class="atomic-number">87</div><div class="element-name">Frâncio</div><div class="atomic-weight">223</div></div></div>
+    <div class="element metal-alkaline-earth"><span class="large">Ra</span><div class="element-info"><div class="atomic-number">88</div><div class="element-name">Rádio</div><div class="atomic-weight">226</div></div></div>
+    <div class="element actinides"><span class="large">Ac</span><div class="element-info"><div class="atomic-number">89</div><div class="element-name">Actínio</div><div class="atomic-weight">227</div></div></div>
+    <div class="element actinides"><span class="large">Th</span><div class="element-info"><div class="atomic-number">90</div><div class="element-name">Tório</div><div class="atomic-weight">232.03806</div></div></div>
+    <div class="element actinides"><span class="large">Pa</span><div class="element-info"><div class="atomic-number">91</div><div class="element-name">Protactínio</div><div class="atomic-weight">231.03588</div></div></div>
+    <div class="element actinides"><span class="large">U</span><div class="element-info"><div class="atomic-number">92</div><div class="element-name">Urânio</div><div class="atomic-weight">238.02891</div></div></div>
+    <div class="element actinides"><span class="large">Np</span><div class="element-info"><div class="atomic-number">93</div><div class="element-name">Neptúnio</div><div class="atomic-weight">237</div></div></div>
+    <div class="element actinides"><span class="large">Pu</span><div class="element-info"><div class="atomic-number">94</div><div class="element-name">Plutônio</div><div class="atomic-weight">244</div></div></div>
+    <div class="element actinides"><span class="large">Am</span><div class="element-info"><div class="atomic-number">95</div><div class="element-name">Amerício</div><div class="atomic-weight">243</div></div></div>
+    <div class="element actinides"><span class="large">Cm</span><div class="element-info"><div class="atomic-number">96</div><div class="element-name">Cúrio</div><div class="atomic-weight">247</div></div></div>
+    <div class="element actinides"><span class="large">Bk</span><div class="element-info"><div class="atomic-number">97</div><div class="element-name">Berquélio</div><div class="atomic-weight">247</div></div></div>
+    <div class="element actinides"><span class="large">Cf</span><div class="element-info"><div class="atomic-number">98</div><div class="element-name">Califórnio</div><div class="atomic-weight">251</div></div></div>
+    <div class="element actinides"><span class="large">Es</span><div class="element-info"><div class="atomic-number">99</div><div class="element-name">Einsteinio</div><div class="atomic-weight">252</div></div></div>
+    <div class="element actinides"><span class="large">Fm</span><div class="element-info"><div class="atomic-number">100</div><div class="element-name">Férmio</div><div class="atomic-weight">257</div></div></div>
+    <div class="element actinides"><span class="large">Md</span><div class="element-info"><div class="atomic-number">101</div><div class="element-name">Mendelévio</div><div class="atomic-weight">258</div></div></div>
+    <div class="element actinides"><span class="large">No</span><div class="element-info"><div class="atomic-number">102</div><div class="element-name">Nobélio</div><div class="atomic-weight">259</div></div></div>
+    <div class="element actinides"><span class="large">Lr</span><div class="element-info"><div class="atomic-number">103</div><div class="element-name">Laurêncio</div><div class="atomic-weight">262</div></div></div>
+    <div class="element actinides"><span class="large">Rf</span><div class="element-info"><div class="atomic-number">104</div><div class="element-name">Rutherfórdio</div><div class="atomic-weight">267</div></div></div>
+    <div class="element actinides"><span class="large">Db</span><div class="element-info"><div class="atomic-number">105</div><div class="element-name">Dúbnio</div><div class="atomic-weight">268</div></div></div>
+    <div class="element actinides"><span class="large">Sg</span><div class="element-info"><div class="atomic-number">106</div><div class="element-name">Seabórgio</div><div class="atomic-weight">271</div></div></div>
+    <div class="element actinides"><span class="large">Bh</span><div class="element-info"><div class="atomic-number">107</div><div class="element-name">Bóhrio</div><div class="atomic-weight">270</div></div></div>
+    <div class="element actinides"><span class="large">Hs</span><div class="element-info"><div class="atomic-number">108</div><div class="element-name">Hássio</div><div class="atomic-weight">277</div></div></div>
+    <div class="element actinides"><span class="large">Mt</span><div class="element-info"><div class="atomic-number">109</div><div class="element-name">Meitnério</div><div class="atomic-weight">278</div></div></div>
+    <div class="element actinides"><span class="large">Ds</span><div class="element-info"><div class="atomic-number">110</div><div class="element-name">Darmstádtio</div><div class="atomic-weight">281</div></div></div>
+    <div class="element actinides"><span class="large">Rg</span><div class="element-info"><div class="atomic-number">111</div><div class="element-name">Roentgênio</div><div class="atomic-weight">282</div></div></div>
+    <div class="element actinides"><span class="large">Cn</span><div class="element-info"><div class="atomic-number">112</div><div class="element-name">Copernício</div><div class="atomic-weight">285</div></div></div>
+    <div class="element actinides"><span class="large">Nh</span><div class="element-info"><div class="atomic-number">113</div><div class="element-name">Nihônio</div><div class="atomic-weight">286</div></div></div>
+    <div class="element actinides"><span class="large">Fl</span><div class="element-info"><div class="atomic-number">114</div><div class="element-name">Fleróvio</div><div class="atomic-weight">289</div></div></div>
+    <div class="element actinides"><span class="large">Mc</span><div class="element-info"><div class="atomic-number">115</div><div class="element-name">Moscóvio</div><div class="atomic-weight">290</div></div></div>
+    <div class="element actinides"><span class="large">Lv</span><div class="element-info"><div class="atomic-number">116</div><div class="element-name">Livermório</div><div class="atomic-weight">293</div></div></div>
+    <div class="element actinides"><span class="large">Ts</span><div class="element-info"><div class="atomic-number">117</div><div class="element-name">Tenessino</div><div class="atomic-weight">294</div></div></div>
+    <div class="element actinides"><span class="large">Og</span><div class="element-info"><div class="atomic-number">118</div><div class="element-name">Oganessônio</div><div class="atomic-weight">294</div></div></div>
+</div>
+
+<div class="legend">
+    <h3>Legenda</h3>
+    <ul>
+        <li><span class="color metal-alkaline-legend"></span>Metais Alcalinos</li>
+        <li><span class="color metal-alkaline-earth-legend"></span>Metais Alcalino-terrosos</li>
+        <li><span class="color metalloids-legend"></span>Metaloides</li>
+        <li><span class="color nonmetals-legend"></span>Não Metais</li>
+        <li><span class="color halogens-legend"></span>Halogênios</li>
+        <li><span class="color noble-gases-legend"></span>Gases Nobres</li>
+        <li><span class="color lanthanides-legend"></span>Lantanídeos</li>
+        <li><span class="color actinides-legend"></span>Actinídeos</li>
+        <li><span class="color transition-metals-legend"></span>Metais de Transição</li>
+    </ul>
+</div>
+ 
+
+<script>
+  const scientists = [
+      { name: 'Ada Lovelace', letter: 'A', img: 'Fotos/ada_lovelace.jpg' },
+      { name: 'Albert Einstein', letter: 'A', img: 'Fotos/albert_einstein.jpg' },
+      { name: 'Barbara McClintock', letter: 'B', img: 'Fotos/barbara_mcclintock.jpg' },
+      { name: 'Blaise Pascal', letter: 'B', img: 'Fotos/blaise_pascal.jpg' },
+      { name: 'Carl Sagan', letter: 'C', img: 'Fotos/carl_sagan.jpg' },
+      { name: 'Charles Darwin', letter: 'C', img: 'Fotos/charles_darwin.jpg' },
+      { name: 'David Attenborough', letter: 'D', img: 'Fotos/david_attenborough.jpg' },
+      { name: 'Dmitri Mendeleev', letter: 'D', img: 'Fotos/dmitri_mendeleev.jpg' },
+      { name: 'Eileen Collins', letter: 'E', img: 'Fotos/eileen_collins.jpg' },
+      { name: 'Enrico Fermi', letter: 'E', img: 'Fotos/enrico_fermi.jpg' },
+      { name: 'Fermat Pierre de', letter: 'F', img: 'Fotos/fermat_pierre_de.jpg' },
+      { name: 'Francis Crick', letter: 'F', img: 'Fotos/francis_crick.jpg' },
+      { name: 'Galileo Galilei', letter: 'G', img: 'Fotos/galileo_galilei.jpg' },
+      { name: 'Gerty Cori', letter: 'G', img: 'Fotos/gerty_cori.jpg' },
+      { name: 'Hannah Arendt', letter: 'H', img: 'Fotos/hannah_arendt.jpg' },
+      { name: 'Hans Albrecht', letter: 'H', img: 'Fotos/hans_albrecht.jpg' },
+      { name: 'Isaac Newton', letter: 'I', img: 'Fotos/isaac_newton.jpg' },
+      { name: 'Irène Joliot-Curie', letter: 'I', img: 'Fotos/irene_joliot_curie.jpg' },
+      { name: 'James Clerk Maxwell', letter: 'J', img: 'Fotos/james_clerk_maxwell.jpg' },
+      { name: 'Jane Goodall', letter: 'J', img: 'Fotos/jane_goodall.jpg' },
+      { name: 'Kurt Gödel', letter: 'K', img: 'Fotos/kurt_godel.jpg' },
+      { name: 'Katherine Johnson', letter: 'K', img: 'Fotos/katherine_johnson.jpg' },
+      { name: 'Leonhard Euler', letter: 'L', img: 'Fotos/leonhard_euler.jpg' },
+      { name: 'Lise Meitner', letter: 'L', img: 'Fotos/lise_meitner.jpg' },
+      { name: 'Marie Curie', letter: 'M', img: 'Fotos/marie_curie.jpg' },
+      { name: 'Michael Faraday', letter: 'M', img: 'Fotos/michael_faraday.jpg' },
+      { name: 'Niels Bohr', letter: 'N', img: 'Fotos/niels_bohr.jpg' },
+      { name: 'Nina Simone', letter: 'N', img: 'Fotos/nina_simone.jpg' },
+      { name: 'Oscar Wilde', letter: 'O', img: 'Fotos/oscar_wilde.jpg' },
+      { name: 'Olga Ladyzhenskaya', letter: 'O', img: 'Fotos/olga_ladyzhenskaya.jpg' },
+      { name: 'Pablo Picasso', letter: 'P', img: 'Fotos/pablo_picasso.jpg' },
+      { name: 'Rosalind Franklin', letter: 'R', img: 'Fotos/rosalind_franklin.jpg' },
+      { name: 'Richard Feynman', letter: 'R', img: 'Fotos/richard_feynman.jpg' },
+      { name: 'Stephen Hawking', letter: 'S', img: 'Fotos/stephen_hawking.jpg' },
+      { name: 'Srinivasa Rama', letter: 'S', img: 'Fotos/srinivasa_ramanujan.jpg' },
+      { name: 'Turing Alan', letter: 'T', img: 'Fotos/turing_alan.jpg' },
+      { name: 'Thomas Edison', letter: 'T', img: 'Fotos/thomas_edison.jpg' },
+      { name: 'Ursula Franklin', letter: 'U', img: 'Fotos/ursula_franklin.jpg' },
+      { name: 'Upton Sinclair', letter: 'U', img: 'Fotos/upton_sinclair.jpg' },
+      { name: 'Vera Rubin', letter: 'V', img: 'Fotos/vera_rubin.jpg' },
+      { name: 'Vladimir Lenin', letter: 'V', img: 'Fotos/vladimir_lenin.jpg' },
+      { name: 'Walt Disney', letter: 'W', img: 'Fotos/walt_disney.jpg' },
+      { name: 'Willem de kooning', letter: 'W', img: 'Fotos/willem_de_kooning.jpg' },
+      { name: 'Xander Bogaerts', letter: 'X', img: 'Fotos/xander_bogaerts.jpg' },
+      { name: 'Yoko ono', letter: 'Y', img: 'Fotos/yoko_ono.jpg' },
+      { name: 'Yuri Gagarin', letter: 'Y', img: 'Fotos/yuri_gagarin.jpg' },
+      { name: 'Zaha Hadid', letter: 'Z', img: 'Fotos/zaha_hadid.jpg' },
+      { name: 'Zora Neale', letter: 'Z', img: 'Fotos/zora_neale_hurston.jpg' }
+  ];
+
+  const scientistListElement = document.getElementById('elementos-lista');
+  const searchBox = document.getElementById('search-box');
+
+  function renderScientists(filteredScientists) {
+      scientistListElement.innerHTML = '';
+      filteredScientists.forEach(scientist => {
+          const scientistDiv = document.createElement('div');
+          scientistDiv.className = 'elementos';
+          scientistDiv.innerHTML = `
+              <img src="${scientist.span}" alt="${scientist.name}">
+              <p>${scientist.name}</p>
+          `;
+          scientistListElement.appendChild(scientistDiv);
+      });
+  }
+
+  function filterByLetter(letter) {
+      const filteredScientists = scientists.filter(scientist => scientist.letter === letter);
+      renderScientists(filteredScientists);
+  }
+
+  function filterBySearch(query) {
+      const filteredScientists = scientists.filter(scientist => scientist.name.toLowerCase().includes(query.toLowerCase()));
+      renderScientists(filteredScientists);
+  }
+  function filterBySearch(query) {
+  // Normalizar a string de busca
+  const normalizedQuery = query.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+  // Filtrar cientistas com base na string de busca normalizada
+  const filteredScientists = scientists.filter(scientist => {
+      const normalizedName = scientist.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      return normalizedName.includes(normalizedQuery);
+  });
+
+  renderScientists(filteredScientists);
+}
+
+  function toggleMode() {
+      const body = document.body;
+      const isLightMode = body.classList.contains('light-mode');
+      if (isLightMode) {
+          body.classList.remove('light-mode');
+          body.classList.add('dark-mode');
+          document.querySelector('.mode-icon').innerText = '🌞'; // Mudar o ícone para sol no modo escuro
+      } else {
+          body.classList.remove('dark-mode');
+          body.classList.add('light-mode');
+          document.querySelector('.mode-icon').innerText = '🌙'; // Mudar o ícone para lua no modo claro
+      }
+  }
+
+  searchBox.addEventListener('input', (event) => {
+      filterBySearch(event.target.value);
+  });
+
+  // Renderizar todos os cientistas ao carregar a página
+  renderScientists(scientists);
+</script>
+
+
+
+<div class="betternet-wrapper"></div>
+</body>
+</html>
